@@ -1,16 +1,12 @@
 // Dependencies
 const express = require('express');
 const path = require('path');
-//var uniqid = require('uniqid');
-// const jsonfile = require('jsonfile')
 
 //Reading and Writing variables/ imports for db.json
 const fs = require('fs');
-//const { Buffer } = require('buffer');
 
-const app = express();
 const PORT = process.env.PORT | 3000;
-
+const app = express();
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
