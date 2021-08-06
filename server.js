@@ -14,10 +14,10 @@ app.use(express.json());
 app.use(express.static('public'));
 
 //Getting the index.html page
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public/index.html')));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/public/index.html')));
 
 //Getting the notes.html page
-app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, 'public/notes.html')));
+app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, '/public/notes.html')));
 
 //Read the data from the db.json
 app.get('/api/notes', (req, res) => {
