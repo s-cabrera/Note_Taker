@@ -1,17 +1,10 @@
 [
-    {
-        "title":"Test Title",
-        "text":"Test text"
-    }
-]
-[
-	{		"title": "New Title",
-		"text": "new text"
-	}
-]
-
-[
-	{		"title": "New Title",
-		"text": "new text"
-	}
+  {
+    "title": "Test Title",
+    "text": "Test text"
+  },
+  {
+    "title": "New Title",
+    "text": "New Text"
+  }
 ]

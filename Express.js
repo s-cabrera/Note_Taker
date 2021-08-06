@@ -2,14 +2,14 @@
 const express = require('express');
 const path = require('path');
 //var uniqid = require('uniqid');
-const jsonfile = require('jsonfile')
+// const jsonfile = require('jsonfile')
 
 //Reading and Writing variables/ imports for db.json
 const fs = require('fs');
 //const { Buffer } = require('buffer');
 
 const app = express();
-const PORT = process.env.PORT | 3001;
+const PORT = process.env.PORT | 3000;
 
 
 // Sets up the Express app to handle data parsing
@@ -23,42 +23,55 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'public/index.html'
 //Getting the notes.html page
 app.get('/notes', (req, res) => res.sendFile(path.join(__dirname, 'public/notes.html')));
 
-//app.delete('api/notes/:id', (req, res) => {});
+app.delete('api/notes/:id', (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+    fs.readFile('./db/db.json', 'UTF-8', (err, data) => {
+        if(err)throw err;
+        
+        let jsonData = JSON.parse(data);
+        jsonData.splice(id, 1);
+        fs.writeFile('./db/db.json', JSON.stringify(jsonData, null, 2), (err, data) => {
+            if(err)throw err;
+             console.log('Note deleted');
+             //console.log(data);
+            return res.send(data);
+        });
+        
+    })
+});
 
 //Read the data from the db.json
 app.get('/api/notes', (req, res) => {
-    fs.readFile('./db/db.json', (err, data) => {
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
         if(err){throw err}
-        let newData = JSON.parse(data);
-        console.log(newData);
+        //let newData = JSON.parse(data);
+        //console.log(newData);
         return res.send(data);
     });
 });
 
 // Write the data to the db.json file
 app.post('/api/notes', (req, res) => {
-    
     console.log(req.body);
-    // let loadedData = JSON.parse(req.body);
-    // console.log(loadedData);
+    fs.readFile('./db/db.json', 'UTF-8', (err, data) => {
+       if(err)throw err;
+       
+       let jsonData = JSON.parse(data);
 
-    let data = "\n[\n" + "\t{" + `\t\t"title": "${req.body.title}",\n` + 
-        `\t\t"text": "${req.body.text}"\n` + "\t}\n" + "]\n";
+       let userData = {
+          title: `${req.body.title}`,
+          text: `${req.body.text}`
+       };
 
-    fs.appendFile('./db/db.json', data, (err, data) => {
-        if(err)throw err;
-        console.log('Note saved');
-        console.log(data);
-        //return res.send(data);
-    });
-
-    fs.readFile('./db/db.json', (err, data) => {
-        if(err){throw err}
-        console.log(JSON.parse(data));
-        // return res.send(data);
-    });
-
-    //uniqid.process()
+       jsonData.push(userData);
+       fs.writeFile('./db/db.json', JSON.stringify(jsonData, null, 2), (err, data) => {
+            if(err)throw err;
+             console.log('Note saved');
+             //console.log(data);
+        });
+        return res.send(userData);
+    })
 });
 
 // Listener
