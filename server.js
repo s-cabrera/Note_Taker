@@ -6,7 +6,7 @@ const path = require('path');
 const fs = require('fs');
 
 
-const PORT = process.env.PORT | 3000;
+const PORT = process.env.PORT || 3001;
 const app = express();
 
 // Sets up the Express app to handle data parsing
@@ -85,4 +85,4 @@ app.delete('/api/notes/:id/', (req, res) => {
 });
 
 // Listener
-app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));
+app.listen(PORT, () => console.log(`App listening on port ${PORT}`));
