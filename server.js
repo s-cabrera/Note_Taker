@@ -4,6 +4,8 @@ const path = require('path');
 
 //Reading and Writing variables/ imports for db.json
 const fs = require('fs');
+const file = require('/db/db.json')
+
 
 const PORT = process.env.PORT | 3000;
 const app = express();
@@ -12,6 +14,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static('public'));
+app.use(file)
 
 //Getting the index.html page
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/public/index.html')));
